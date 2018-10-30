@@ -1,13 +1,13 @@
 public class TennisScorer {
     private int ballsWonByPlayer1;
     private int ballsWonByPlayer2;
-    private String[] scores = new String[]{"love", "fifteen", "thirty",""};
+    private String[] scores = new String[]{"love", "fifteen", "thirty", "forty"};
 
     public String getMatchScore() {
-        if(ballsWonByPlayer2 == ballsWonByPlayer1 && ballsWonByPlayer2 == 3){
+        if (ballsWonByPlayer2 == ballsWonByPlayer1 && ballsWonByPlayer2 == 3) {
             return "Deuce";
         }
-        if(ballsWonByPlayer2 == 4){
+        if (ballsWonByPlayer2 == 4) {
             return "Player 2 wins";
         } else if (ballsWonByPlayer1 == 4) {
             return "Player 1 wins";

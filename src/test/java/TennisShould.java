@@ -33,6 +33,14 @@ public class TennisShould {
 
         assertThat(tennisScorer.getMatchScore(), is("thirty-love"));
     }
+    @Test
+    public void show_forty_when_player_1_scores() {
+        tennisScorer.addPointToPlayer1();
+        tennisScorer.addPointToPlayer1();
+        tennisScorer.addPointToPlayer1();
+
+        assertThat(tennisScorer.getMatchScore(), is("forty-love"));
+    }
 
     @Test
     public void show_player_1_wins_when_player_1_wins() {
