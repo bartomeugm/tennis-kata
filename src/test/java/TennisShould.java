@@ -43,4 +43,25 @@ public class TennisShould {
 
         assertThat(tennisScorer.getMatchScore(), is("Player 1 wins"));
     }
+    @Test
+    public void show_player_2_wins_when_player_2_wins() {
+        tennisScorer.addPointToPlayer2();
+        tennisScorer.addPointToPlayer2();
+        tennisScorer.addPointToPlayer2();
+        tennisScorer.addPointToPlayer2();
+
+        assertThat(tennisScorer.getMatchScore(), is("Player 2 wins"));
+    }
+
+    @Test
+    public void deuce_when_players_have_both_40_points() {
+        tennisScorer.addPointToPlayer2();
+        tennisScorer.addPointToPlayer2();
+        tennisScorer.addPointToPlayer2(); // 40
+        tennisScorer.addPointToPlayer1();
+        tennisScorer.addPointToPlayer1();
+        tennisScorer.addPointToPlayer1(); // 40
+
+        assertThat(tennisScorer.getMatchScore(), is("Deuce"));
+    }
 }
