@@ -1,27 +1,19 @@
 import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 public class TennisScorer {
     private Score scorePlayer1 = new Score();
     private Score scorePlayer2 = new Score();
+    private List<ScoreRule> rules;
+
+    public TennisScorer(List<ScoreRule> rules) {
+        this.rules = rules;
+    }
 
     public String getMatchScore() {
-        if (scorePlayer1.isDeucedWith(scorePlayer2)) {
-            return "Deuce";
-        }
-        if (scorePlayer1.hasAdvantageOver(scorePlayer2)) {
-            return "advantage for player 1";
-        }
-        if (scorePlayer2.hasAdvantageOver(scorePlayer1)){
-            return "advantage for player 2";
-        }
-        if (scorePlayer1.wins(scorePlayer2)) {
-            return "Player 1 wins";
-        }
-        if (scorePlayer2.wins(scorePlayer1)) {
-            return "Player 2 wins";
-        }
-        return String.format("%s-%s", scorePlayer1.formatted(), scorePlayer2.formatted());
+        return rules.stream().map(it -> it.apply(scorePlayer1, scorePlayer2)).filter(Optional::isPresent).findFirst().get().get();
     }
 
     public void addPointToPlayer1() {
@@ -32,7 +24,7 @@ public class TennisScorer {
         scorePlayer2.increase();
     }
 
-    private class Score {
+    public class Score {
         public static final int MINIMUM_NUMBER_OF_BALLS_WON_TO_WIN_THE_GAME = 4;
         private String[] scores = new String[]{"love", "fifteen", "thirty", "forty"};
 
@@ -66,13 +58,23 @@ public class TennisScorer {
             return this.ballsWon >= 4 && this.ballsWon - 1 == other.ballsWon;
         }
 
-        private boolean wins(Score other) {
-            return this.ballsWon >= MINIMUM_NUMBER_OF_BALLS_WON_TO_WIN_THE_GAME && this.ballsWon - other.ballsWon>= 2;
+        public boolean wins(Score other) {
+            return this.ballsWon >= MINIMUM_NUMBER_OF_BALLS_WON_TO_WIN_THE_GAME && this.ballsWon - other.ballsWon >= 2;
         }
 
         public String formatted() {
             return scores[ballsWon];
         }
 
+        public boolean isSecondAdvantageWith(Score scorePlayer2) {
+            return this.ballsWon >= 4 && this.ballsWon - 1 == scorePlayer2.ballsWon;
+        }
+
+    }
+
+    public static class ScoreRule {
+        public Optional<String> apply(Score scorePlayer1, Score scorePlayer2) {
+            return Optional.empty();
+        }
     }
 }
