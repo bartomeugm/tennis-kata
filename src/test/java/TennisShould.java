@@ -244,15 +244,6 @@ public class TennisShould {
             add(new TennisScorer.ScoreRule() {
                 @Override
                 public Optional<String> apply(TennisScorer.Score scorePlayer1, TennisScorer.Score scorePlayer2) {
-                    if (scorePlayer1.isSecondAdvantageWith(scorePlayer2)) {
-                        return Optional.of("second advantage for player 1");
-                    }
-                    return Optional.empty();
-                }
-            });
-            add(new TennisScorer.ScoreRule() {
-                @Override
-                public Optional<String> apply(TennisScorer.Score scorePlayer1, TennisScorer.Score scorePlayer2) {
                     if (scorePlayer1.hasAdvantageOver(scorePlayer2)) {
                         return Optional.of("advantage for player 1");
                     }
