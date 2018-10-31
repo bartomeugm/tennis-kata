@@ -15,6 +15,7 @@ public class TennisShould {
     @Before
     public void setUp() throws Exception {
         tennisScorer = new TennisScorer(new ArrayList<TennisScorer.ScoreRule>() {{
+
             add(new TennisScorer.ScoreRule() {
                 @Override
                 public Optional<String> apply(TennisScorer.Score scorePlayer1, TennisScorer.Score scorePlayer2) {
@@ -24,6 +25,7 @@ public class TennisShould {
                     return Optional.empty();
                 }
             });
+
             add(new TennisScorer.ScoreRule() {
                 @Override
                 public Optional<String> apply(TennisScorer.Score scorePlayer1, TennisScorer.Score scorePlayer2) {
@@ -237,6 +239,15 @@ public class TennisShould {
                 public Optional<String> apply(TennisScorer.Score scorePlayer1, TennisScorer.Score scorePlayer2) {
                     if (scorePlayer1.isDeucedWith(scorePlayer2)) {
                         return Optional.of("Deuce");
+                    }
+                    return Optional.empty();
+                }
+            });
+            add(new TennisScorer.ScoreRule() {
+                @Override
+                public Optional<String> apply(TennisScorer.Score scorePlayer1, TennisScorer.Score scorePlayer2) {
+                    if (scorePlayer1.isSecondAdvantageWith(scorePlayer2)) {
+                        return Optional.of("second advantage for player 1");
                     }
                     return Optional.empty();
                 }
